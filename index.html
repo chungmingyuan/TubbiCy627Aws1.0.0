@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tubbi - Best Chinese Food in San Gabriel Valley!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--stylesheet-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.blue-amber.min.css">
+    <link rel="stylesheet" type="text/css" href="css/ngAutocomplete.css">
+    <link rel="stylesheet" href="css/Tasty_Talks_v0.0.26.css">
+
+
+    <!-- Google maps -->
+
+    <script>
+        // Google Analytics 
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-64801283-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- Google auto address complete -->
+    <!-- end -->
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="customersCrtl" ng-init="formdata.language_local='en-US'" class="ngcont">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#coverPic">Tubbi</a>
+                    <a class="navbar-brand"></a>
+                    <ul class="nav navbar-nav pull-left ">
+
+                        <li class="dropdown" ng-show="formdata.language_local=='cmn-Hant-TW'" ng-hide="formdata.language_local=='en-US'">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cutlery"></span></span> 菜類: <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-click="formdata.category_id=1; formdata.asr_results='全部' ;loadData()"><a class="page-scroll" href="#search_results">全部</a></li>
+                                <li class="divider"></li>
+                                <li ng-click="formdata.category_id=2; formdata.asr_results='川菜' ;loadData()"><a class="page-scroll" href="#search_results">川菜</a></li>
+                                <li ng-click="formdata.category_id=3; formdata.asr_results='台灣小吃' ;loadData()"><a class="page-scroll" href="#search_results">台灣小吃</a></li>
+                                <li ng-click="formdata.category_id=4; formdata.asr_results='京菜' ;loadData()"><a class="page-scroll" href="#search_results">京菜</a></li>
+                                <li ng-click="formdata.category_id=5; formdata.asr_results='廣東菜' ;loadData()"><a class="page-scroll" href="#search_results">廣東菜</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown" ng-show="formdata.language_local=='en-US'" ng-hide="formdata.language_local=='cmn-Hant-TW'">
+                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cutlery"></span></span> Cuisines: <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-click="formdata.category_id=1; formdata.asr_results='全部' ;loadData()"><a class="page-scroll" href="#search_results">All</a></li>
+                                <li class="divider"></li>
+                                <li ng-click="formdata.category_id=2; formdata.asr_results='川菜' ;loadData()"><a class="page-scroll" href="#search_results">Schezwan</a></li>
+                                <li ng-click="formdata.category_id=3; formdata.asr_results='台灣小吃' ;loadData()"><a class="page-scroll" href="#search_results">Taiwanese</a></li>
+                                <li ng-click="formdata.category_id=4; formdata.asr_results='京菜' ;loadData()"><a class="page-scroll" href="#search_results">Beijing</a></li>
+                                <li ng-click="formdata.category_id=5; formdata.asr_results='廣東菜' ;loadData()"><a class="page-scroll" href="#search_results">Cantonese</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown ">
+                            <a ng-show="formdata.language_local=='cmn-Hant-TW'" ng-hide="formdata.language_local=='en-US'" href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span></span> 語言: <span class="caret"></span></a>
+                            <a ng-show="formdata.language_local=='en-US'" href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-globe"></span></span> Language: <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-click="formdata.language_local='cmn-Hant-TW'; langchange(formdata.language_local); loadData()"><a class="lng-sel" href="#">中文</a></li>
+                                <li ng-click="formdata.language_local='en-US'; langchange(formdata.language_local); loadData()"><a class="lng-sel" href="#">English</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a ng-show="formdata.language_local=='cmn-Hant-TW'" ng-hide="formdata.language_local=='en-US'" href="mailto:tubbi.eats@gmail.com"> <span class="glyphicon glyphicon-envelope"></span> 聯繫我們</a>
+                        </li>
+
+                        <li>
+                            <a ng-show="formdata.language_local=='en-US'" href="mailto:tubbi.eats@gmail.com"> <span class="glyphicon glyphicon-envelope"></span> Contact Us</a>
+                        </li>
+                    </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a ng-show="formdata.language_local=='cmn-Hant-TW'" ng-hide="formdata.language_local=='en-US'" href="#" data-toggle="modal" data-target="#myModal_ch"> <span class="glyphicon glyphicon-plus"></span>加餐館</a>
+                        </li>
+
+                        <li>
+                            <a ng-show="formdata.language_local=='en-US'" href="#" data-toggle="modal" data-target="#myModal_en"> <span class="glyphicon glyphicon-plus"></span> Add </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Modal Chinese -->
+        <div class="modal fade" id="myModal_ch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_ch">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" id="addstore-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel_ch">加餐館</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <form name="storeForm" id="form" role="form" data-toggle="validator" role="form" novalidate="true">
+
+                            <div class="form-group has-feedback">
+                                <label for="inName" class="control-label">English Name:</label>
+                                <input type="text" ng-model="inForm.inName" class="form-control" id="inName" placeholder="DinTaiFung" required="">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="inCh_Name" class="control-label">中文店名:</label>
+                                <input type="text" ng-model="inForm.inCh_Name" class="form-control" id="inCh_Name" placeholder="鼎泰豐" required="">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            <div ng-controller="autoCompleteAddressCrtl" class="form-group has-feedback">
+                                <label for="inLocation" class="control-label">地址:</label>
+                                <input type="text" ng-model="inForm.inLocation" class="form-control" id="inLocation" placeholder="123 Main St, Arcadia, CA" required="" ng-autocomplete options="options" details="details" lat="inForm.inLat" lng="inForm.inLng">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="inCategory">菜式:</label>
+                                <select ng-model="inForm.inCategory" class="form-control">
+                                    <option value="" selected disabled>請選擇...</option>
+                                    <option>川菜</option>
+                                    <option>台灣小吃</option>
+                                    <option>京菜</option>
+                                    <option>廣東菜</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inRating">評分:</label>
+                                <select ng-model="inForm.inRating" class="form-control">
+                                    <option value="" selected disabled>請選擇...</option>
+                                    <option>一星級</option>
+                                    <option>一顆半星級</option>
+                                    <option>兩星級</option>
+                                    <option>兩顆半星級</option>
+                                    <option>三星級</option>
+                                    <option>三顆半星級</option>
+                                    <option>四星級</option>
+                                    <option>四顆半星級</option>
+                                    <option>五星級</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inContributor">貢獻者:</label>
+                                <input type="text" ng-model="inForm.inAddedBy" class="form-control" id="inAddedBy" placeholder="名字" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inComment">額外評論:</label>
+                                <textarea class="form-control" ng-model="inForm.inComments" rows="3" id="inComments"></textarea>
+                            </div>
+
+                            <div class="modal-footer form-group">
+                                <button type="button" ng-click="resetStore()" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="submit" ng-click="addStore()" ng-disabled="!storeForm.$valid" class="btn btn-primary disabled">提交</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">結果訊息:</label>
+                                <textarea ng-model="inForm.retMsg" class="form-control" rows="1" id="retMsg"></textarea>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Modal English -->
+        <div class="modal fade" id="myModal_en" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_en">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" id="addstore-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel_en">New Restaurant Info</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <form name="storeForm" id="form" role="form" data-toggle="validator" role="form" novalidate="true">
+
+                            <div class="form-group has-feedback">
+                                <label for="inName" class="control-label">English Name:</label>
+                                <input type="text" ng-model="inForm.inName" class="form-control" id="inName" placeholder="DinTaiFung" ng-required="true">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="inCh_Name" class="control-label">Chineses Name(Optional):</label>
+                                <input type="text" ng-model="inForm.inCh_Name" class="form-control" id="inCh_Name" placeholder="鼎泰豐">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            <div ng-controller="autoCompleteAddressCrtl" class="form-group has-feedback">
+                                <label for="inLocation" class="control-label">Address:</label>
+                                <input type="text" ng-model="inForm.inLocation" class="form-control" id="inLocation" placeholder="123 Main St, Arcadia, CA" ng-required="true" ng-autocomplete options="options" details="details" lat="inForm.inLat" lng="inForm.inLng">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="inCategory">Cuisine:</label>
+                                <select ng-model="inForm.inCategory" ng-required="true" class="form-control">
+                                    <option value="" selected disabled>selected disabled>Select from list...</option>
+                                    <option>Schezwan</option>
+                                    <option>Taiwanese</option>
+                                    <option>Beijing</option>
+                                    <option>Cantonese</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inRating">Rating:</label>
+                                <select ng-model="inForm.inRating" ng-required="true" class="form-control">
+                                    <option value="" selected disabled>Select from list...</option>
+                                    <option>1 Star</option>
+                                    <option>1.5 Stars</option>
+                                    <option>2 Stars</option>
+                                    <option>2.5 Stars</option>
+                                    <option>3 Stars</option>
+                                    <option>3.5 Stars</option>
+                                    <option>4 Stars</option>
+                                    <option>4.5 Stars</option>
+                                    <option>5 Stars</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inContributor">Contributer:</label>
+                                <input type="text" ng-model="inForm.inAddedBy" ng-required="true" class="form-control" id="inAddedBy" placeholder="Your Name..." />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inComment">Comments:</label>
+                                <textarea class="form-control" ng-model="inForm.inComments" rows="3" id="inComments"></textarea>
+                            </div>
+
+                            <div class="modal-footer form-group">
+                                <button type="button" ng-click="resetStore()" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="submit" ng-click="addStore()" ng-disabled="!storeForm.$valid" class="btn btn-primary disabled">Submit</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Return Message:</label>
+                                <textarea ng-model="inForm.retMsg" class="form-control" rows="1" id="retMsg"></textarea>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div id="cuisines_ch" ng-show="formdata.language_local=='cmn-Hant-TW'" ng-hide="formdata.language_local=='en-US'">
+            <section id="coverPic">
+                <div class="wide">
+                    <div class="jumbotron">
+                        <h1>Tubbi</h1>
+                        <p id="jumbo-greeting" class="jumbo-info"> 尋找在 San Gabriel Valley 最好吃的中國菜! </p>
+                        <div id="jumbo-button">
+                            <a href="#cruisine-container_ch" class="btn btn-circle page-scroll">
+                                <i class="glyphicon glyphicon-menu-down animated" id="arrowdown"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="cruisine-container_ch">
+                <div class="container">
+                    <h1 id="jumbo-instructions" class="jumbo-info">請點選下列仼一菜式</h1>
+                    <div class="row" id="cruisine_row">
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=2; formdata.asr_results='川菜' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="川菜" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=2; formdata.asr_results='川菜' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="schezwan_title" href="#search_results">川菜</a></h3>
+                            <p class="crusine_info" id="schezwan_des">口味特色: 麻辣, 爽口夠勁</p>
+                            <p class="cruisine_dishes" id="schezwan_dish">名菜: 宮保雞丁, 麻婆豆腐</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=3; formdata.asr_results='台灣小吃' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="台灣小吃" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=3; formdata.asr_results='台灣小吃' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="taiwan_title" href="#search_results">台灣小吃</a></h3>
+                            <p class="crusine_info" id="taiwan_des">口味特色: 煎炒, 多元豐富</p>
+                            <p class="cruisine_dishes" id="taiwan_dish">名菜: 蚵仔煎, 刈包 </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=4; formdata.asr_results='京菜' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="京菜" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=4; formdata.asr_results='京菜' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="beijing_title" href="#search_results">京菜</a></h3>
+                            <p class="crusine_info" id="beijing_des">口味特色: 燉烤, 量足味濃</p>
+                            <p class="cruisine_dishes" id="beijing_dish">名菜: 北京烤鴨</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=5; formdata.asr_results='廣東菜' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="廣東菜" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=5; formdata.asr_results='廣東菜' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="canto_title" href="#search_results">廣東菜</a></h3>
+                            <p class="crusine_info" id="canto_des">口味特色: 煨煲, 鮮美滋補</p>
+                            <p class="cruisine_dishes" id="canto_dish">名菜: 燒賣, 烤乳豬</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div id="cuisines_en" ng-show="formdata.language_local=='en-US'" ng-hide="formdata.language_local=='cmn-Hant-TW'">
+            <section id="coverPic">
+                <div class="wide">
+                    <div class="jumbotron">
+                        <h1>Tubbi</h1>
+                        <p id="jumbo-greeting" class="jumbo-info">Find the best Chinese food in the San Gabriel Valley! </p>
+                        <div id="jumbo-button">
+                            <a href="#cruisine-container_en" class="btn btn-circle page-scroll">
+                                <i class="glyphicon glyphicon-menu-down animated" id="arrowdown"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="cruisine-container_en">
+                <div class="container">
+                    <h1 id="jumbo-instructions" class="jumbo-info">Select one of the categories below</h1>
+                    <div class="row" id="cruisine_row">
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=2; formdata.asr_results='schezwan' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="schezwan" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=2; formdata.asr_results='schezwan' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="schezwan_title" href="#search_results">Schezwan</a></h3>
+                            <p class="crusine_info" id="schezwan_des">Cuisine from midwest China, known for its spiciness</p>
+                            <p class="cruisine_dishes" id="schezwan_dish">Popular Dishes: Kung Pao Chicken, Mabo Tofu</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=3; formdata.asr_results='taiwanese' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="taiwanese" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=3; formdata.asr_results='taiwanese' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="taiwan_title" href="#search_results">Taiwanese</a></h3>
+                            <p class="crusine_info" id="taiwan_des">Famous street food from Taiwan night markets</p>
+                            <p class="cruisine_dishes" id="taiwan_dish">Popular Dishes: Oyster Omelettes, Gua Bao</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=4; formdata.asr_results='beijin' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="beijin" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=4; formdata.asr_results='beijin' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="beijing_title" href="#search_results">Beijing</a></h3>
+                            <p class="crusine_info" id="beijing_des">Food from northern China, known for their soups and baked goods</p>
+                            <p class="cruisine_dishes" id="beijing_dish">Popular Dishes: Peking Duck</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 cruisine_info">
+                            <a class="page-scroll" href="#search_results"><img ng-click="formdata.category_id=5; formdata.asr_results='cantonese' ;loadData()" ng-src="img/tubbi_logo.png" class="img-reponsive" alt="cantonese" width="125" height="125" /></a>
+                            <h3 ng-click="formdata.category_id=5; formdata.asr_results='cantonese' ;loadData()" class="cruisine_name"><a class = "cruisine_link page-scroll" id="canto_title" href="#search_results">Cantonese</a></h3>
+                            <p class="crusine_info" id="canto_des">Steamed dishes from southern China, popularized by Dim Sum</p>
+                            <p class="cruisine_dishes" id="canto_dish">Popular Dishes: Shumai, Suckling Pig</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <section id="search_results">
+            <div class="container">
+                <div ng-model="initLoad">
+                    <!-- ng-hide="initLoad"-->
+                    <div class="row" id="options">
+                        <div class="col-md-2">PageSize:
+                            <select ng-model="entryLimit" class="form-control">
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">Filter:
+                            <input type="text" ng-model="search" ng-change="filter()" placeholder="Filter" class="form-control" />
+                        </div>
+                        <div class="col-md-8">
+                            <h5>Filtered {{ filtered.length }} of {{ totalItems}} total customers</h5>
+                        </div>
+                    </div>
+                    <div class="row" id="content_display">
+                        <div class="col-md-6 col-sm-6 col-xs-12 center-block" id="results_display">
+                            <!--Your Seach Result-->
+                            <div ng-show="filteredItems > 0">
+                                <table>
+                                    <tr ng-repeat="data in filtered = (list | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                        <td id="repeat-table">
+                                            <storeen ng-show="formdata.language_local=='en-US'"></storeen>
+                                            <storech ng-show="formdata.language_local=='cmn-Hant-TW'" ng-hide="formdata.language_local=='en-US'"></storech>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6" ng-show="filteredItems == 0">
+                                <div class="col-md-5">
+                                    <h4 id="no_result">No customers found</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 center-block" id="map_contain">
+                            <div data-spy="affix" id="map_test">
+                                <div id="map_result"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="panel panel-default">
+            <div class="panel-footer">
+                <p id="footer-end">2015 Tubbi</p>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="lib/validator.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.1/ui-bootstrap.min.js"></script>
+        <script src="lib/angularjs-geolocation.min.js"></script>
+        <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+        <script src="lib/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCkqclrMf0ddYLSeVWlIB-8nrOmttY1csk&libraries=places&sensor=false"></script>
+        <script src="app/app16.js"></script>
+
+</body>
+
+</html>
