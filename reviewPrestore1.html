@@ -1,6 +1,8 @@
 <!doctype html>
 <html ng-app="app">
-  <head>
+
+<head>
+    <LINK REL="SHORTCUT ICON" HREF="img/tubbi_logo.png">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
@@ -10,19 +12,21 @@
     <script src="http://ui-grid.info/release/ui-grid.js"></script>
     <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
     <link rel="stylesheet" href="main.css" type="text/css">
- </head>
-  <body>
+</head>
 
-<div ng-controller="MainCtrl">
-  <button id='addNew' ng-click='uploadStore();reloadPage();'>Upload Store</button>
-<br>
-  <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
-  <br>
-  <br>  
-  <div ui-grid="gridOptions" ui-grid-edit ui-grid-resize-columns ui-grid-move-columns ui-grid-row-edit ui-grid-cellNav class="grid"></div>
-</div>
+<body>
+
+    <div ng-controller="MainCtrl">
+        <button id='addNew' ng-click='uploadStore();reloadPage();'>Upload Store</button>
+        <br>
+        <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button> <span ng-bind="currentFocused"></span>
+        <br>
+        <br>
+        <div ui-grid="gridOptions" ui-grid-edit ui-grid-resize-columns ui-grid-move-columns ui-grid-row-edit ui-grid-cellNav class="grid"></div>
+    </div>
 
 
     <script src="app/reviewPrestore1.js"></script>
-  </body>
+</body>
+
 </html>
